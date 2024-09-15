@@ -18,8 +18,8 @@ int main(int argc, char **argv) {
   uint8_t mouse_ev[3];
   uint32_t behind_cursor[CURSOR_SIZE * CURSOR_SIZE];
 
-  if (argc != 3) {
-    fprintf(stderr, "usage: %s /dev/fbX /dev/input/mouseX\n", argv[0]);
+  if (argc != 2 && argc != 3) {
+    fprintf(stderr, "usage: %s /dev/fbX [/dev/input/mouseX]\n", argv[0]);
     return 1;
   }
 
@@ -41,10 +41,18 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  mouse = open(argv[2], O_RDONLY);
-  if (mouse < 0) {
-    perror(argv[2]);
-    return 1;
+  if (argc == 2) {
+    mouse = open("/dev/input/mice", O_RDONLY);
+    if (mouse < 0) {
+      perror("/dev/input/mice");
+      return 1;
+    }
+  } else {
+    mouse = open(argv[2], O_RDONLY);
+    if (mouse < 0) {
+      perror(argv[2]);
+      return 1;
+    }
   }
 
   x = 0;

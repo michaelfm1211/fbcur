@@ -9,11 +9,7 @@ direct attention on your screen.
 There are two versions of fbcur. They are nearly identical but use different
 linux APIs:
 - `fbcur`: Uses the mousedev interface. This is the reccomended version to use.
-    It should work with both mice and touchpads. If you have multiple of these
-    devices, you can tell `fbcur` to use the `/dev/input/mice` device which
-    will track all mice/touchpad input devices. If you would like `fbcur` to
-    only track input from one mouse or touchpad device, specify the device with
-    its `/dev/input/mouseX` device.
+    It should work with both mice and touchpads.
 - `fbcur_ev`: Uses the evdev interface. Although linux encourages this API over
     mousedev, it is more complicated. As a result, `fbcur_ev` does not support
     trackpad devices, but regular mice should work fine. To tell `fbcur_ev`
@@ -23,10 +19,18 @@ linux APIs:
     support, you should use `fbcur` instead.
 
 fbcur takes two command line arguments: the device file of the framebuffer and
-the device file of the input device to track. Here is an example invokation
-which will work on most systems:
+the device file of the input device to track. If using `fbcur`, the second
+argument is optional (but is required for `fbcur_ev`). The follow invokation
+will work on most programs:
 ```
-fbcur /dev/fb0 /dev/input/mice
+fbcur /dev/fb0
 ```
-To use `fbcur_ev` instead, replace `fbcur` with `fbcur_ev` and
-`/dev/input/mice` with your event device.
+Here is an example of specifying an input device:
+```
+fbcur /dev/fb0 /dev/input/mouse0
+```
+To use `fbcur_ev`, replace `fbcur` with `fbcur_ev` and pass an event device.
+For example:
+```
+fbcur /dev/fb0 /dev/input/event2
+```
