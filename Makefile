@@ -1,4 +1,4 @@
-PREFIX=/usr/local
+PREFIX ?= /usr/local
 
 CFLAGS = -Wall -Wextra -Werror -pedantic
 
@@ -16,8 +16,8 @@ fbcur_ev: fbcur_ev.o
 
 .PHONY: install
 install: all
-	install -m 755 fbcur $(PREFIX)/bin/fbcur
-	install -m 755 fbcur_ev $(PREFIX)/bin/fbcur_ev
+	install -Dm 755 fbcur $(PREFIX)/bin/fbcur
+	install -Dm 755 fbcur_ev $(PREFIX)/bin/fbcur_ev
 
 .PHONY: clean
 clean:
